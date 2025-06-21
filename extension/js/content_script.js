@@ -51,7 +51,9 @@ function StravaEnhancementSuiteInit() {
 }
 
 
-injectJs('/js/injected_init.js');
+(async () => {
+  await injectJs('/js/injected_init.js');
+})();
 
 
 // TODO: Add unit tests
