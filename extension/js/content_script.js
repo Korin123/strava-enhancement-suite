@@ -15,7 +15,7 @@ function injectJs(what) {
     if (what.startsWith('//')) { // Only for local development, CWS disallows remote code
       el.src = what;
     } else if (what.startsWith('/')) {
-      el.src = chrome.extension.getURL(what);
+      el.src = chrome.runtime.getURL(what);
     } else {
       el.textContent = what;
     }
@@ -30,7 +30,7 @@ function injectJs(what) {
 function injectCss(what) {
   return new Promise((resolve, reject) => {
     const el = document.createElement('link');
-    el.href = chrome.extension.getURL(what);
+    el.href = chrome.runtime.getURL(what);
     el.type = 'text/css';
     el.rel = 'stylesheet';
     el.onerror = reject;
@@ -51,7 +51,7 @@ function StravaEnhancementSuiteInit() {
 }
 
 
-injectJs(StravaEnhancementSuiteInit.toString() + ';StravaEnhancementSuiteInit();');
+injectJs('/js/injected_init.js');
 
 
 // TODO: Add unit tests
@@ -94,7 +94,7 @@ async function executeInstructionsFromUrl() {
 
   await injectJs('/js/main.js');
 
-  await injectJs(`window.strava_enhancement_suite = new StravaEnhancementSuite(jQuery, ${JSON.stringify(options)});`);
+  window.dispatchEvent(new CustomEvent('SES_init', { detail: options }));
 })();
 
 
