@@ -46,6 +46,9 @@
         "js/libs/*.js",
         "js/libs/*.css",
         "js/main.js",
+
+        "js/injected_init.js",
+ 
         "pages/options.js"
       ],
       "matches": [
